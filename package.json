@@ -1,0 +1,28 @@
+{
+  "name": "gridfs",
+  "version": "1.0.0",
+  "description": "Simple app to learn how to store images and videos actually in database",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "author": "Prince Sunsara",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "crypto": "^1.0.1",
+    "ejs": "^3.1.10",
+    "express": "^4.19.2",
+    "gridfs-stream": "^1.1.1",
+    "method-override": "^3.0.0",
+    "mongodb": "^5.9.1",
+    "mongoose": "^5.13.10",
+    "multer": "^1.4.4",
+    "multer-gridfs-storage": "^5.0.2",
+    "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  }
+}
