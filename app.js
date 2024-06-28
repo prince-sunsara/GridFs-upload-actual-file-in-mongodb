@@ -1,6 +1,5 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const path = require('path');
 const mongoose = require('mongoose');
 const multer = require('multer');
 const { GridFsStorage } = require('multer-gridfs-storage');
@@ -60,7 +59,10 @@ app.get('/', (req, res) => {
         if (err || !files || files.length === 0) {
             res.render("index", { files: false })
         }
-        res.render('index', { files: files });
+        //  else {
+        //     files.map(file => res.render('index', { files: files, type: file.contentType }))
+        // }
+        res.render("index", { files: files })
     })
 });
 

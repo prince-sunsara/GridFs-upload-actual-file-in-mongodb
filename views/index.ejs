@@ -4,37 +4,92 @@
 <head>
     <title>File Upload</title>
     <style>
-        form {
-            margin-top: 10px;
+        body {
+            text-align: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: aliceblue;
         }
 
-        button {
-            padding: 6px 12px;
+        .container {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .card {
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 4px 8px;
+            width: 300px;
+            box-shadow: 0 0 12px rgba(0, 0, 0, 0.3), 0 0 10px rgba(0, 0, 0, 0.7);
             cursor: pointer;
+            transition: ease 1s;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+        }
+
+        input[type="file"] {
+            border: 1px solid gray;
+            padding: 6px 12px;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        button,
+        input[type="submit"] {
+            padding: 6px 12px;
+            margin-top: 1rem;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
         }
     </style>
 </head>
 
 <body>
-    <h1>Upload a file</h1>
+    <h1>Upload actual files to MongoDB(using GridFs)</h1>
     <form action="/upload" method="POST" enctype="multipart/form-data">
         <input type="file" name="file" />
         <input type="submit" value="Upload" />
     </form>
     <hr>
-    <% if(files){ %>
-        <% files.forEach(file=> { %>
-            <h3 style="text-transform: capitalize;">
-                <%= file.filename %>
-            </h3>
-            <img src="files/<%= file.filename %>" alt="<%= file.filename %>">
-            <form action="files/<%= file._id %>?_method=DELETE" method="post">
-                <button type="submit">Remove</button>
-            </form>
-            <% }) %>
-                <% } else{ %>
-                    <p>No files to Show</p>
-                    <% } %>
+    <hr>
+    <div class="container">
+        <% if(files){ %>
+            <% files.forEach(file=> { %>
+                <% if(file.contentType==="image/jpeg" || file.contentType==="image/png" ){ %>
+                    <div class="card">
+                        <h3 style="text-transform: capitalize;">
+                            <%= file.filename %>
+                        </h3>
+                        <img src="files/<%= file.filename %>" alt="<%= file.filename %>">
+                        <form action="files/<%= file._id %>?_method=DELETE" method="post">
+                            <button type="submit">Remove</button>
+                        </form>
+                    </div>
+                    <% } else { %>
+                        <div class="card">
+                            <h3 style="text-transform: capitalize;">
+                                <%= file.filename %>
+                            </h3>
+                            <video controls>
+                                <source src="files/<%= file.filename %>" type="video/mp4">
+                            </video>
+                            <form action="files/<%= file._id %>?_method=DELETE" method="post">
+                                <button type="submit">Remove</button>
+                            </form>
+                        </div>
+                        <% } %>
+                            <% }) %>
+                                <% } else{ %>
+                                    <p>No files to Show</p>
+                                    <% } %>
+    </div>
 </body>
 
 </html>
